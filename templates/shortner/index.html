@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>URL Shortner</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <style>
+        .custom-btn {
+            border: 1px solid #ced4da;
+            background-color: #e9ecef;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container d-flex vh-100 justify-content-center align-items-center"> 
+        <div class="card text-center w-75">
+            <div class="card-body">
+                <h5 class="card-title">Shorten URL</h5>
+
+                <form action="{% url 'index' %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingOriginal" placeholder="Original URL" name="original" required>
+                        <label for="floatingOriginal">Original URL</label>
+                    </div>
+                    <div class="form-floating d-flex">
+                        <input type="text" class="form-control" id="floatingShort" placeholder="Short URL" value="{{short}}" disabled>
+                        <label for="floatingShort">Short URL</label>
+                        <input type="button" class="btn custom-btn" value="copy" onclick="copyFunction()">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg my-2">Shorten</button>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+    <script>
+        function copyFunction() {
+            /* Get the text field */
+            var copyText = document.getElementById("floatingShort");
+
+            /* Select the text field */
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+            /* Copy the text inside the text field */
+            navigator.clipboard.writeText(copyText.value);
+
+            /* Alert the copied text */
+            alert("Copied the text: " + copyText.value);
+        } 
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
